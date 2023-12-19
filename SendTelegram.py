@@ -16,6 +16,5 @@ def send_telegram(content, dot_env_path='.env'):
 
     bot_token = os.getenv('TELEGRAM_TOKEN')
     chat_id = os.getenv('TELEGRAM_CHAT_ID')
-    print(f'bot_token: {bot_token}')
-    print(f'chat_id: {chat_id}')
+
     asyncio.run(send_telegram_async(bot_token, chat_id, content))
