@@ -12,6 +12,8 @@ def send_email(subject, content, recipient, dot_env_path='.env'):
     sender_email = 'izowooi85@gmail.com'
     sender_password = os.getenv('EMAIL_PASSWORD')#비밀번호 가져오기
 
+    print(f'sender_pss: {sender_password}')
+
     # SMTP 서버 연결 및 로그인
     smtp = smtplib.SMTP(smtp_server, smtp_port)
     smtp.starttls()
