@@ -3,6 +3,7 @@ import yfinance as yf
 import pandas as pd
 
 from SendEmail import send_email
+from SendTelegram import send_telegram
 
 def calculate_moving_averages(data, short_window=5, long_window=60):
     """
@@ -51,7 +52,7 @@ def send_trading_signal_alert(ticker):
         message = f"매수 신호 발생: 날짜 {latest_data.name}, 종가 {latest_data['Close']}"
         # send_email 함수 또는 send_fcm_message 함수 호출
         send_email("매수 신호 발생", message, receiver_email)
-        # send_fcm_message("매수 신호 발생", message, "your_fcm_token")
+        send_telegram(message)
 
     # 매도 신호 확인
     elif latest_data['Sell_Signal']:
@@ -59,4 +60,4 @@ def send_trading_signal_alert(ticker):
         message = f"매도 신호 발생: 날짜 {latest_data.name}, 종가 {latest_data['Close']}"
         # send_email 함수 또는 send_fcm_message 함수 호출
         send_email("매도 신호 발생", message, receiver_email)
-        # send_fcm_message("매도 신호 발생", message, "your_fcm_token")
+        send_telegram(message)
