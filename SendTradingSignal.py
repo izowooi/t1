@@ -52,7 +52,13 @@ def send_trading_signal_alert(ticker):
     dotenv_path = os.getenv('dotenv_path', '.env')
 
     print(f'dotenv_path의 값: {dotenv_path}')
-    # latest_data['Buy_Signal'] = True
+
+    test_buy_signal = os.getenv('test_send_email', False)
+
+    if test_buy_signal:
+        latest_data['Buy_Signal'] = True
+
+    print(f'dotenv_path의 값: {dotenv_path}')
 
     # 매수 신호 확인
     if latest_data['Buy_Signal']:
