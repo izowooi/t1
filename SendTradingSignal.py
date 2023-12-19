@@ -1,9 +1,8 @@
 #Trend Following
+import sys
 import os
 
 import yfinance as yf
-import pandas as pd
-
 from SendEmail import send_email
 from SendTelegram import send_telegram
 
@@ -29,7 +28,12 @@ def generate_signals(data):
     data['Sell_Signal'] = (data['Short_MA'] < data['Long_MA']) & (data['Short_MA'].shift(1) >= data['Long_MA'].shift(1))
     return data
 
-def send_trading_signal_alert(ticker):
+
+def str_to_bool(s):
+    return s.lower() in ('true', '1', 't', 'y', 'yes')
+
+
+def send_trading_signal_alert(ticker, dotenv_path='.env', test_buy_signal=False):
     print(f'매매 신호 확인: {ticker}')
     data = yf.download(ticker, start='2020-01-01')
 
@@ -49,12 +53,6 @@ def send_trading_signal_alert(ticker):
     print(latest_data)
 
     receiver_email = 'izowooi85@gmail.com'
-
-    dotenv_path = os.getenv('dotenv_path', '.env')
-
-    print(f'dotenv_path의 값: {dotenv_path}')
-
-    test_buy_signal = os.getenv('TEST_BUY_SIGNAL', False)
 
     if test_buy_signal:
         latest_data['Buy_Signal'] = True

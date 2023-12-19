@@ -19,7 +19,7 @@ def main():
 
     # 리스트의 각 요소에 대해 반복문을 실행합니다.
     for ticker in ticker_list:
-        send_trading_signal_alert(ticker)
+        send_trading_signal_alert(ticker, dotenv_path, test_buy_signal)
 
 
 main()
