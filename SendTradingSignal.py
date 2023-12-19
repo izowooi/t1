@@ -30,7 +30,8 @@ def generate_signals(data):
     return data
 
 def send_trading_signal_alert(ticker):
-    data = yf.download(ticker, start='2010-01-01')
+    print(f'매매 신호 확인: {ticker}')
+    data = yf.download(ticker, start='2020-01-01')
 
     # 이동 평균 계산
     data = calculate_moving_averages(data, short_window=5, long_window=60)
