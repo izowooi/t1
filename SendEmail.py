@@ -4,8 +4,8 @@ import smtplib
 from email.mime.text import MIMEText
 
 
-def send_email(subject, content, recipient):
-    load_dotenv()
+def send_email(subject, content, recipient, dot_env_path='.env'):
+    load_dotenv(dot_env_path)
 
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587

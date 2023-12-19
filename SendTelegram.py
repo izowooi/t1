@@ -11,8 +11,8 @@ async def send_telegram_async(bot_token, chat_id, content):
     await bot.sendMessage(chat_id=chat_id, text=content)
 
 
-def send_telegram(content):
-    load_dotenv()
+def send_telegram(content, dot_env_path='.env'):
+    load_dotenv(dot_env_path)
 
     bot_token = os.getenv('TELEGRAM_TOKEN')
     chat_id = os.getenv('TELEGRAM_CHAT_ID')
