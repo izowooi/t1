@@ -1,7 +1,4 @@
-#Trend Following
-import sys
-import os
-
+# Trend Follower
 import yfinance as yf
 from SendEmail import send_email
 from SendTelegram import send_telegram
@@ -47,7 +44,6 @@ def send_trading_signal_alert(ticker, dotenv_path='.env', test_buy_signal=False)
     print(data[['Close', 'Short_MA', 'Long_MA', 'Buy_Signal', 'Sell_Signal']].tail(n=60))
 
     # 결과 확인 및 알림 전송
-    #latest_data = data.iloc[-1][['Buy_Signal', 'Sell_Signal']]  # 가장 최근 데이터
     latest_data = data.iloc[-1]# 가장 최근 데이터
     print('\n')
     print(latest_data)
@@ -59,18 +55,14 @@ def send_trading_signal_alert(ticker, dotenv_path='.env', test_buy_signal=False)
 
     print(f'dotenv_path의 값: {dotenv_path}')
 
-    # 매수 신호 확인
+    # 매수 신호가 True일 경우
     if latest_data['Buy_Signal']:
-        # 매수 신호가 True일 경우
         message = f"[{ticker}] 매수 신호 발생: 날짜 {latest_data.name}, 종가 {latest_data['Close']}"
-        # send_email 함수 또는 send_fcm_message 함수 호출
         send_email("매수 신호 발생", message, receiver_email, dotenv_path)
         send_telegram(message, dotenv_path)
 
-    # 매도 신호 확인
+    # 매도 신호가 True일 경우
     elif latest_data['Sell_Signal']:
-        # 매도 신호가 True일 경우
         message = f"[{ticker}] 매도 신호 발생: 날짜 {latest_data.name}, 종가 {latest_data['Close']}"
-        # send_email 함수 또는 send_fcm_message 함수 호출
         send_email("매도 신호 발생", message, receiver_email, dotenv_path)
         send_telegram(message, dotenv_path)

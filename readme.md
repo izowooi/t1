@@ -4,10 +4,12 @@
 
 ## 실행방법
 ```
-ticker_list=MSFT,AMZN,GOOGL
-dotenv_path=/home/ubuntu/izowooi
+TICKER_LIST="MSFT,AMZN,NFLX,TMF,TMV,GOOGL"
+#TICKER_LIST="GOOGL"
+DOTENV_PATH="/var/lib/jenkins/auth/.env"
+TEST_BUY_SIGNAL=False
 
-python3 ./main.py
+python3 ./main.py $TICKER_LIST $DOTENV_PATH $TEST_BUY_SIGNAL
 ```
 
 ## 준비할 것

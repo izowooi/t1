@@ -12,12 +12,11 @@ def main():
     dotenv_path = sys.argv[2] if len(sys.argv) > 2 else '.env'
     test_buy_signal = str_to_bool(sys.argv[3]) if len(sys.argv) > 3 else False
 
-    print(f'ticker_list_str의 값: {ticker_list_str}')
-    print(f'dotenv_path의 값: {dotenv_path}')
-    print(f'test_buy_signal의 값: {test_buy_signal}')
+    print(f'ticker_list_str : {ticker_list_str}')
+    print(f'dotenv_path : {dotenv_path}')
+    print(f'test_buy_signal : {test_buy_signal}')
     ticker_list = ticker_list_str.split(',')
 
-    # 리스트의 각 요소에 대해 반복문을 실행합니다.
     for ticker in ticker_list:
         send_trading_signal_alert(ticker, dotenv_path, test_buy_signal)
 
