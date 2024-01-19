@@ -30,3 +30,56 @@ TELEGRAM_CHAT_ID=TELEGRAM_CHAT_ID
 - yfinance
 - python-dotenv
 - python-telegram-bot
+
+## 젠킨스 Shell Script
+
+### 1. 미국
+```shell
+#!/bin/bash
+#H 19 * * 2-6
+source /var/lib/jenkins/.bashrc
+
+TICKER_LIST="MSFT,AMZN,NFLX,TMF,TMV,GOOGL"
+DOTENV_PATH="/var/lib/jenkins/auth/.env"
+TEST_BUY_SIGNAL=False
+
+conda activate trend_follower
+
+python3 ./main.py $TICKER_LIST $DOTENV_PATH $TEST_BUY_SIGNAL
+
+conda deactivate
+```
+
+### 2. 한국
+```shell
+#!/bin/bash
+#H 8 * * 1-5
+source /var/lib/jenkins/.bashrc
+
+TICKER_LIST="005930.KS,051910.KS,123420.KQ,139480.KS,139660.KS,292560.KS,036570.KS"
+DOTENV_PATH="/var/lib/jenkins/auth/.env"
+TEST_BUY_SIGNAL=False
+
+conda activate trend_follower
+
+/usr/bin/python3 ./main.py $TICKER_LIST $DOTENV_PATH $TEST_BUY_SIGNAL
+
+conda deactivate
+```
+
+### 3. 일본
+```shell
+#!/bin/bash
+#H 8 * * 1-5
+source /var/lib/jenkins/.bashrc
+
+TICKER_LIST="7203.T,6758.T,6861.T,9984.T,7974.T"
+DOTENV_PATH="/var/lib/jenkins/auth/.env"
+TEST_BUY_SIGNAL=False
+
+conda activate trend_follower
+
+/usr/bin/python3 ./main.py $TICKER_LIST $DOTENV_PATH $TEST_BUY_SIGNAL
+
+conda deactivate
+```
