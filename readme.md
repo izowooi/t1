@@ -21,6 +21,26 @@ TELEGRAM_TOKEN=TELEGRAM_TOKEN
 TELEGRAM_CHAT_ID=TELEGRAM_CHAT_ID
 ```
 
+
+## 인스턴스 생성시 사용한 명령어
+```shell
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+./Miniconda3-latest-Linux-x86_64.sh
+
+source ~/.bashrc
+
+conda create --name trend_follower python=3.11
+conda activate trend_follower
+conda deactivate
+
+pip3 install yfinance
+pip3 install python-dotenv
+pip3 install python-telegram-bot
+
+sudo systemctl stop jenkins
+sudo systemctl start jenkins
+```
+
 ## 키값에 대한 설명
 - EMAIL_PASSWORD: 구글 이메일 앱 패스워드 ([링크](https://support.google.com/mail/answer/185833))
 - TELEGRAM_TOKEN: 텔레그램 봇 토큰 ([링크](https://ykarma1996.tistory.com/107))
