@@ -5,6 +5,7 @@ from SendTelegram import send_telegram
 import requests
 from datetime import datetime
 import pandas as pd
+from AlertHistory import has_already_sent, update_sent_log
 
 
 def calculate_moving_averages(data, short_window=5, long_window=60):
@@ -107,11 +108,19 @@ def send_trading_signal_alert(ticker, dotenv_path='.env', is_yahoo=True, test_bu
     # 매수 신호가 True일 경우
     if latest_data['Buy_Signal']:
         message = f"[{ticker}] 매수 신호 발생: 날짜 {latest_data.name}, 종가 {latest_data['Close']}"
-        send_email("매수 신호 발생", message, receiver_email, dotenv_path)
-        send_telegram(message, dotenv_path)
+        alert_signal(ticker, message, receiver_email, dotenv_path)
 
     # 매도 신호가 True일 경우
     elif latest_data['Sell_Signal']:
         message = f"[{ticker}] 매도 신호 발생: 날짜 {latest_data.name}, 종가 {latest_data['Close']}"
-        send_email("매도 신호 발생", message, receiver_email, dotenv_path)
-        send_telegram(message, dotenv_path)
+        alert_signal(ticker, message, receiver_email, dotenv_path)
+
+
+def alert_signal(ticker, message, receiver_email, dotenv_path):
+    if has_already_sent(ticker):
+        print(f'이미 매매 신호를 보냈습니다. {ticker}')
+        return
+    send_email("신호 발생", message, receiver_email, dotenv_path)
+    send_telegram(message, dotenv_path)
+    update_sent_log(ticker)
+
