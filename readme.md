@@ -23,12 +23,24 @@ TELEGRAM_CHAT_ID=TELEGRAM_CHAT_ID
 
 
 ## 인스턴스 생성시 사용한 명령어
+### 맥
+```shell
+#mac
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -O ~/miniconda.sh
+bash ~/miniconda.sh -b -p $HOME/miniconda
+rm -rf ~/miniconda/miniconda.sh
+~/miniconda/bin/conda init zsh
+source ~/.bash_profile
+```
+### 리눅스
 ```shell
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 ./Miniconda3-latest-Linux-x86_64.sh
 
 source ~/.bashrc
-
+```
+### 공용
+```shell
 conda create --name trend_follower python=3.11
 conda activate trend_follower
 conda deactivate
