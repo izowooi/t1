@@ -54,6 +54,7 @@ def data_from_yahoo(ticker, start_date='2024-01-01'):
 
     return data
 
+
 #364980
 def data_from_naver(ticker):
     current_date = datetime.now()
@@ -116,14 +117,15 @@ def send_trading_signal_alert(ticker, dotenv_path='.env', is_yahoo=True, test_bu
         latest_data['Buy_Signal'] = True
 
     print(f'dotenv_path의 값: {dotenv_path}')
+    buy_signal = latest_data['Buy_Signal'].item()
+    sell_signal = latest_data['Sell_Signal'].item()
 
     # 매수 신호가 True일 경우
-    if latest_data['Buy_Signal']:
+    if buy_signal:
         message = f"[{ticker}] 매수 신호 발생: 날짜 {latest_data.name}, 종가 {latest_data['Close']}"
         alert_signal(ticker, message, receiver_email, dotenv_path)
-
     # 매도 신호가 True일 경우
-    elif latest_data['Sell_Signal']:
+    elif sell_signal:
         message = f"[{ticker}] 매도 신호 발생: 날짜 {latest_data.name}, 종가 {latest_data['Close']}"
         alert_signal(ticker, message, receiver_email, dotenv_path)
 
@@ -135,4 +137,6 @@ def alert_signal(ticker, message, receiver_email, dotenv_path):
     send_email("신호 발생", message, receiver_email, dotenv_path)
     send_telegram(message, dotenv_path)
     update_sent_log(ticker)
+
+
 
