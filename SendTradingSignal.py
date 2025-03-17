@@ -36,9 +36,21 @@ def str_to_bool(s):
     return s.lower() in ('true', '1', 't', 'y', 'yes')
 
 
-def data_from_yahoo(ticker):
-    print(f'매매 신호 확인: {ticker}')
-    data = yf.download(ticker, start='2020-01-01')
+def data_from_yahoo(ticker, start_date='2024-01-01'):
+    print(f'매매 신호 확인(티커): {ticker}')
+    print(f'조회 시작일: {start_date}')
+
+    data = yf.download(ticker, start=start_date)
+
+    # 데이터 요약 로그 출력
+    # print('--- 데이터 헤더(상위 5개) ---')
+    # print(data.head())
+    # print('--- 데이터 테일(하위 5개) ---')
+    # print(data.tail())
+
+    # 데이터가 비어있는지 체크
+    if data.empty:
+        print("경고: Yahoo Finance 로부터 데이터를 가져오지 못했습니다. (빈 데이터)")
 
     return data
 
