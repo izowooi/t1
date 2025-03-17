@@ -13,6 +13,7 @@ def main():
     test_buy_signal = str_to_bool(sys.argv[3]) if len(sys.argv) > 3 else False
     is_yahoo = str_to_bool(sys.argv[4]) if len(sys.argv) > 4 else True
 
+    #ticker_list_str = "CPNG,CVX,QQQM,QQQ,SPY"
     print(f'ticker_list_str : {ticker_list_str}')
     print(f'dotenv_path : {dotenv_path}')
     print(f'test_buy_signal : {test_buy_signal}')
