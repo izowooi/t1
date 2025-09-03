@@ -31,7 +31,7 @@ SMA60  : {self.sma60:.2f}
 """
         return subject, body
 
-def run_signal_detection(conf: Config, only: Iterable[str] | None = None, dry_run: bool = False) -> List[SignalMessage]:
+def run_signal_detection(conf: Config, only: Iterable[str] | None = None, dry_run: bool = False, debug_mode: bool = False) -> List[SignalMessage]:
     key = conf.supabase_service_role_key or conf.supabase_anon_key
     if not conf.supabase_url or not key:
         raise RuntimeError("Supabase URL/Key 설정이 필요합니다 (.env).")
@@ -41,8 +41,9 @@ def run_signal_detection(conf: Config, only: Iterable[str] | None = None, dry_ru
 
     found: List[SignalMessage] = []
     for sym in tickers:
+        print(f"[signal] {sym}")
         rows = db.fetch_last_n(sym, 65)
-        res = compute_sma_cross(rows)
+        res = compute_sma_cross(rows, debug_mode=debug_mode)
         if not res:
             continue
         df, cross = res

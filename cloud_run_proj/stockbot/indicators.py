@@ -11,10 +11,14 @@ class CrossResult:
     sma5: float
     sma60: float
 
-def compute_sma_cross(ohlc: Iterable[OHLC]) -> Optional[Tuple[pd.DataFrame, Optional[CrossResult]]]:
+def compute_sma_cross(ohlc: Iterable[OHLC], debug_mode: bool = False) -> Optional[Tuple[pd.DataFrame, Optional[CrossResult]]]:
     """
     Input must be in ascending date order.
     Roughly last ~65 rows are sufficient (60SMA + prev/current comparison).
+
+    Args:
+        ohlc: OHLC data iterable
+        debug_mode: If True, force generate test cross signals
     """
     rows = list(ohlc)
     if len(rows) < 61:  # need at least 60 for SMA60 plus a previous day
@@ -36,6 +40,17 @@ def compute_sma_cross(ohlc: Iterable[OHLC]) -> Optional[Tuple[pd.DataFrame, Opti
     prev, curr = valid.iloc[-2], valid.iloc[-1]
     diff_prev = float(prev["sma5"] - prev["sma60"])
     diff_curr = float(curr["sma5"] - curr["sma60"])
+
+    # Debug mode: 강제로 테스트용 신호 생성
+    if debug_mode:
+        if len(rows) % 2 == 0:  # 짝수번째 호출시 골든크로스
+            cross = CrossResult("golden_cross", price=float(curr["close"]),
+                               sma5=float(curr["sma5"]), sma60=float(curr["sma60"]))
+        else:  # 홀수번째 호출시 데드크로스
+            cross = CrossResult("dead_cross", price=float(curr["close"]),
+                               sma5=float(curr["sma5"]), sma60=float(curr["sma60"]))
+        print(f"🔧 DEBUG MODE: Forced {cross.signal_type}")
+        return df, cross
 
     cross: Optional[CrossResult] = None
     if diff_prev <= 0.0 and diff_curr > 0.0:

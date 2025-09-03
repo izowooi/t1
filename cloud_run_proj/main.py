@@ -14,6 +14,7 @@ def parse_args() -> argparse.Namespace:
     p_sig = sub.add_parser("signals", help="Detect cross signals & notify")
     p_sig.add_argument("--tickers", type=str, help="Comma-separated symbols")
     p_sig.add_argument("--dry-run", action="store_true", help="Do not send notifications")
+    p_sig.add_argument("--debug", action="store_true", help="Enable debug mode (force cross signals)")
 
     return p.parse_args()
 
@@ -29,7 +30,7 @@ def main() -> None:
     if args.cmd == "ingest":
         ingest_missing(conf, _split(args.tickers))
     elif args.cmd == "signals":
-        run_signal_detection(conf, _split(args.tickers), dry_run=args.dry_run)
+        run_signal_detection(conf, _split(args.tickers), dry_run=args.dry_run, debug_mode=getattr(args, 'debug', False))
     else:
         raise SystemExit(2)
 
