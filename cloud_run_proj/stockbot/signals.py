@@ -18,8 +18,15 @@ class SignalMessage:
 
     def to_text(self) -> str:
         arrow = "🟢" if self.kind == "golden_cross" else "🔴"
-        return (f"{arrow} <b>{self.ticker}</b> {self.d.isoformat()} — {self.kind.replace('_',' ').title()}\n"
-                f"Close: {self.price:.2f} / SMA5: {self.sma5:.2f} / SMA60: {self.sma60:.2f}")
+        korean_signal = "매수 신호" if self.kind == "golden_cross" else "매도 신호"
+        
+        korean_message = (f"{arrow} <b>{self.ticker}</b> {self.d.isoformat()} - {korean_signal}\n"
+                         f"종가: {self.price:.2f} / 5일평균: {self.sma5:.2f} / 60일평균: {self.sma60:.2f}")
+        
+        english_message = (f"{self.kind.replace('_',' ').title()}\n"
+                          f"Close: {self.price:.2f} / SMA5: {self.sma5:.2f} / SMA60: {self.sma60:.2f}")
+        
+        return f"{korean_message}\n\n{english_message}"
 
     def to_email(self) -> tuple[str, str]:
         subject = f"[{self.ticker}] {self.kind.upper()} on {self.d.isoformat()}"
